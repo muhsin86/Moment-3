@@ -1,0 +1,136 @@
+@import "src/sass/main.scss";
+// sass variables
+
+// COLORS
+
+$m-nav-bgr-color: #002e5b;
+$m-border-bottom: 1px solid rgba(225, 225, 225, 0.1);
+$m-a-color: #fff;
+$m-color: #fde428;
+
+
+// === SIZES, WIDTH AND WEIGHT ===
+
+$m-font-size: 20px;
+$m-a-font-size: 15px;
+$m-li-width: 100%;
+$m-section-width: 95%;
+$m-section-max-width: 90%;
+
+@media only screen and (max-width: 1440px) {
+  section {
+    max-width: $m-section-width;
+  }
+}
+
+@media only screen and (max-width: 980px) {
+  header {
+    padding: 20px 0px;
+  }
+
+  #logo {
+    padding: 0px;
+  }
+
+  input[type="checkbox"] {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+    background: none;
+
+    &:fous {
+      background: none;
+    }
+  }
+
+  label {
+    float: right;
+    padding: 8px 0px;
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  input[type="checkbox"]:checked ~ nav {
+    display: block;
+  }
+
+  nav {
+    display: none;
+    position: absolute;
+    right: 0px;
+    top: 53px;
+    background-color: $m-nav-bgr-color;
+    padding: 0px;
+    z-index: 99;
+
+    ul {
+      width: auto;
+
+      li {
+        float: none;
+        padding: 0px;
+        width: $m-li-width;
+        display: table;
+
+        a {
+          color: $m-a-color;
+          font-size: $m-a-font-size;
+          padding: 10px 20px;
+          display: block;
+          border-bottom: $m-border-bottom;
+
+          i {
+            color: $m-color;
+            padding-right: 13px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 980px) {
+  .content {
+    width: $m-section-max-width;
+  }
+}
+
+@media only screen and (max-width: 568px) {
+  h1 {
+    padding: 25px 0px;
+
+    span {
+      display: block;
+    }
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  section {
+    max-width: $m-section-max-width;
+  }
+}
+
+@media only screen and (max-width: 360px) {
+  h1 {
+    font-size: $m-font-size;
+  }
+
+  label {
+    padding: 5px 0px;
+  }
+
+  #logo {
+    font-size: $m-font-size;
+  }
+
+  nav {
+    top: 47px;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  h1 {
+    padding: 20px 0px;
+  }
+}
