@@ -1,3 +1,9 @@
+ * * * * * * * * * * * * * * *  * * * * * * * * * * * * * * * * * * * 
+ *                                                                  *
+ *  This is an uppdated lab 2 to lab3 about converting css to sass. *
+ *                                                                  * 
+ * * * * * * * * * * * * * * *  * * * * * * * * * * * * * * * * * * *
+
 The purpose of the automation process is to minimize and automate time-consuming tasks  like CSS compressing, Sass compiling, image optimization and browser reloading. 
 
 To complet my project successfuly i installed more different functions like 
