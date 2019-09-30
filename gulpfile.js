@@ -46,9 +46,10 @@ function js() {
 function css() {
     return src(files.cssPath)
     .pipe(autoprefixer())
+    .pipe(concat('main.css'))
     .pipe(concat('style.css'))
     .pipe(cssnano())
-    .pipe(dest('public/css'))
+    .pipe(dest('public/css/sass'))
     .pipe(livereload());   
 }
 
@@ -56,12 +57,7 @@ function css() {
 // Task for compile Scss Files
 function scss() {
   return src(files.scssPath)
-      .pipe(sourcemaps.init({ loadMaps: true, largeFile: true }))
-      .pipe(sass({
-        outputStyle: 'compressed'
-      }).on('error', sass.logError))
-      .pipe(rename("style.css"))
-      .pipe(sourcemaps.write())
+      .pipe(sass().on('error', sass.logError))
       .pipe(dest('public/css/'))
       .pipe(livereload()); 
 }
