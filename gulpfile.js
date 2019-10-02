@@ -1,9 +1,10 @@
 const { src, dest, watch, series, parallel } = require("gulp");
 concat = require("gulp-concat");
+uglifyes = require('gulp-uglify-es').default;
+babel = require("gulp-babel");
 concatCss = require('gulp-concat-css');
 cssnano = require('gulp-cssnano');
 autoprefixer = require('gulp-autoprefixer');
-uglifyes = require('gulp-uglify-es').default;
 sass = require('gulp-sass');
 sassComplier = require('node-sass');
 browserSync = require('browser-sync').create();
@@ -31,6 +32,7 @@ function js() {
 	    return src(files.jsPath)
 	    .pipe(concat('main.js'))
 	    .pipe(uglifyes())
+	    .pipe(babel())
 	    .pipe(dest('public/js'))
 	    .pipe(livereload()); 
 }
@@ -38,7 +40,6 @@ function js() {
 function css()
 {
 	return src(files.cssPath, files.scssPath)
-	.pipe(concatCss('main.css'))
 	.pipe(concatCss('style.css'))
 	.pipe(autoprefixer())
     .pipe(cssnano())
