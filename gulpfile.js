@@ -10,6 +10,7 @@ sassComplier = require('node-sass');
 browserSync = require('browser-sync').create();
 livereload = require('gulp-livereload');
 
+// Paths
 const files = {
 	htmlPath: 'src/**/*.html',
 	cssPath: "src/**/*.css",
@@ -19,6 +20,7 @@ const files = {
 	
 };
 
+// Tasks for copying a html files and images
 function html() {
     return src(files.htmlPath)
         .pipe(dest('Public'))
@@ -26,14 +28,24 @@ function html() {
 		.pipe(livereload());  
 }
 
+function image()
+{
+	return src(files.imagePath)
+	.pipe(dest('Public/images'))
+	.pipe(livereload());  
+}
 // Tasks for Concatenating And Minifying JavaScript and CSS Files
 
 function js() {
 	    return src(files.jsPath)
 	    .pipe(concat('main.js'))
 	    .pipe(uglifyes())
-	    .pipe(babel())
+	    .pipe(babel({
+		presets: ['@babel/preset-env'],
+		plugins: ['@babel/transform-runtime']
+	     }))
 	    .pipe(dest('public/js'))
+	    .pipe(browserSync.stream())
 	    .pipe(livereload()); 
 }
 
@@ -48,6 +60,7 @@ function css()
 	.pipe(livereload());  
 }
 
+// Task for compile Scss Files
 function scss()
 {
 	return src(files.scssPath)
@@ -57,16 +70,7 @@ function scss()
 	.pipe(livereload());  
 }
 
-
-// Task: Läsa in ImagesPath från files och kopiera bilder från src/Images till pub/Images
-function image()
-{
-	return src(files.imagePath)
-	.pipe(dest('Public/images'))
-	.pipe(livereload());  
-}
-
-
+// Watching tasks
 function watchTask()
 {
 	livereload.listen();
@@ -79,6 +83,8 @@ function watchTask()
     ).on('change', browserSync.reload);
 }
 
+
+// Gulp basic task
 exports.default = series(
     parallel(html, js, scss, css, image, watchTask),
 );
