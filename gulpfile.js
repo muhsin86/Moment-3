@@ -7,6 +7,7 @@ sass = require('gulp-sass'),
 browserSync = require('browser-sync').create(),
 livereload = require('gulp-livereload');
 
+// Paths
 const files = {
 	htmlPath: 'src/**/*.html',
 	scssPath: "src/scss/main.scss",
@@ -15,6 +16,7 @@ const files = {
 	
 };
 
+// Tasks for copying a html files and images
 function html() {
     return src(files.htmlPath)
         .pipe(dest('Public'))
@@ -22,6 +24,12 @@ function html() {
 		.pipe(livereload());  
 }
 
+function image()
+{
+	return src(files.imagePath)
+	.pipe(dest('Public/images'))
+	.pipe(livereload());  
+}
 // Tasks for Concatenating And Minifying JavaScript and CSS Files
 
 function js() {
@@ -33,9 +41,25 @@ function js() {
 		plugins: ['@babel/transform-runtime']
 	     }))
 	    .pipe(dest('public/js'))
+	    .pipe(browserSync.stream())
 	    .pipe(livereload()); 
 }
 
+<<<<<<< HEAD
+=======
+function css()
+{
+	return src(files.cssPath, files.scssPath)
+	.pipe(concatCss('style.css'))
+	.pipe(autoprefixer())
+    .pipe(cssnano())
+	.pipe(dest('Public/css'))
+	.pipe(browserSync.stream())
+	.pipe(livereload());  
+}
+
+// Task for compile Scss Files
+>>>>>>> dd88dcddaa91c601e60e590938e4d2cc1bcae3d9
 function scss()
 {
 	return src(files.scssPath)
@@ -46,6 +70,7 @@ function scss()
 	.pipe(livereload());  
 }
 
+<<<<<<< HEAD
 //
 function image()
 {
@@ -56,6 +81,9 @@ function image()
 }
 
 // watch task
+=======
+// Watching tasks
+>>>>>>> dd88dcddaa91c601e60e590938e4d2cc1bcae3d9
 function watchTask()
 {
 	livereload.listen();
@@ -68,7 +96,12 @@ function watchTask()
     ).on('change', browserSync.reload);
 }
 
+<<<<<<< HEAD
 // Gulp basic task
+=======
+
+// Gulp basic task
+>>>>>>> dd88dcddaa91c601e60e590938e4d2cc1bcae3d9
 exports.default = series(
     parallel(html, js, scss, image, watchTask),
 );
