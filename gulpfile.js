@@ -1,21 +1,17 @@
-const { src, dest, watch, series, parallel } = require("gulp");
-concat = require("gulp-concat");
-uglifyes = require('gulp-uglify-es').default;
-babel = require("gulp-babel");
-concatCss = require('gulp-concat-css');
-cssnano = require('gulp-cssnano');
-autoprefixer = require('gulp-autoprefixer');
-sass = require('gulp-sass');
-sassComplier = require('node-sass');
-browserSync = require('browser-sync').create();
+const { src, dest, watch, series, parallel } = require("gulp"),
+concat = require("gulp-concat"),
+uglifyes = require('gulp-uglify-es').default,
+babel = require("gulp-babel"),
+csso = require('gulp-csso'),
+sass = require('gulp-sass'),
+browserSync = require('browser-sync').create(),
 livereload = require('gulp-livereload');
 
 const files = {
 	htmlPath: 'src/**/*.html',
-	cssPath: "src/**/*.css",
-	scssPath: "src/**/*.scss",
+	scssPath: "src/scss/main.scss",
 	jsPath: "src/**/*.js", 
-	imagePath: "src/images/*"
+	imagePath: "src/images/*.*"
 	
 };
 
@@ -32,41 +28,34 @@ function js() {
 	    return src(files.jsPath)
 	    .pipe(concat('main.js'))
 	    .pipe(uglifyes())
-	    .pipe(babel())
+	    .pipe(babel({
+		presets: ['@babel/preset-env'],
+		plugins: ['@babel/transform-runtime']
+	     }))
 	    .pipe(dest('public/js'))
 	    .pipe(livereload()); 
-}
-
-function css()
-{
-	return src(files.cssPath, files.scssPath)
-	.pipe(concatCss('style.css'))
-	.pipe(autoprefixer())
-    .pipe(cssnano())
-	.pipe(dest('Public/css'))
-	.pipe(browserSync.stream())
-	.pipe(livereload());  
 }
 
 function scss()
 {
 	return src(files.scssPath)
 	.pipe(sass().on('error', sass.logError))
+	.pipe(csso())
 	.pipe(dest('Public/css'))
 	.pipe(browserSync.stream())
 	.pipe(livereload());  
 }
 
-
-// Task: Läsa in ImagesPath från files och kopiera bilder från src/Images till pub/Images
+//
 function image()
 {
 	return src(files.imagePath)
 	.pipe(dest('Public/images'))
+	.pipe(browserSync.stream())
 	.pipe(livereload());  
 }
 
-
+// watch task
 function watchTask()
 {
 	livereload.listen();
@@ -74,11 +63,12 @@ function watchTask()
 		server:{
 			baseDir: 'Public/' }
 		});
-	watch([files.htmlPath, files.jsPath, files.scssPath, files.cssPath, files.imagePath],
-        parallel(html, js, scss, css, image)
+	watch([files.htmlPath, files.jsPath, files.scssPath, files.imagePath],
+        parallel(html, js, scss, image)
     ).on('change', browserSync.reload);
 }
 
+// Gulp basic task
 exports.default = series(
-    parallel(html, js, scss, css, image, watchTask),
+    parallel(html, js, scss, image, watchTask),
 );
