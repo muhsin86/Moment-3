@@ -9,7 +9,6 @@
   "author": "Mohsen Ali Mohsen",
   "license": "MIT",
   "devDependencies": {
-    "@js-yaml": ">=3.13.1",
     "@babel/core": "^7.6.2",
     "@babel/plugin-transform-runtime": "^7.6.2",
     "@babel/preset-env": "^7.6.2",

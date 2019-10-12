@@ -45,21 +45,6 @@ function js() {
 	    .pipe(livereload()); 
 }
 
-<<<<<<< HEAD
-=======
-function css()
-{
-	return src(files.cssPath, files.scssPath)
-	.pipe(concatCss('style.css'))
-	.pipe(autoprefixer())
-    .pipe(cssnano())
-	.pipe(dest('Public/css'))
-	.pipe(browserSync.stream())
-	.pipe(livereload());  
-}
-
-// Task for compile Scss Files
->>>>>>> dd88dcddaa91c601e60e590938e4d2cc1bcae3d9
 function scss()
 {
 	return src(files.scssPath)
@@ -70,7 +55,6 @@ function scss()
 	.pipe(livereload());  
 }
 
-<<<<<<< HEAD
 //
 function image()
 {
@@ -81,9 +65,6 @@ function image()
 }
 
 // watch task
-=======
-// Watching tasks
->>>>>>> dd88dcddaa91c601e60e590938e4d2cc1bcae3d9
 function watchTask()
 {
 	livereload.listen();
@@ -96,12 +77,7 @@ function watchTask()
     ).on('change', browserSync.reload);
 }
 
-<<<<<<< HEAD
 // Gulp basic task
-=======
-
-// Gulp basic task
->>>>>>> dd88dcddaa91c601e60e590938e4d2cc1bcae3d9
 exports.default = series(
     parallel(html, js, scss, image, watchTask),
 );
